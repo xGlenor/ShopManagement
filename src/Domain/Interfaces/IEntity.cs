@@ -1,6 +1,6 @@
 ﻿namespace Domain.Interfaces;
 
-public interface IEntity
+public interface IEntity : IBaseEntity<string>
 {
     
 }
