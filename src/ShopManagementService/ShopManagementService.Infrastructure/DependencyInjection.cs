@@ -1,6 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Domain.Entities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
+using ShopManagementService.Application.Common.Persistence.Repositories.Base;
+using ShopManagementService.Infrastructure.Persistence;
+using ShopManagementService.Infrastructure.Persistence.Repositories;
 
 namespace ShopManagementService.Infrastructure;
 
@@ -14,6 +18,10 @@ public static class DependencyInjection
             var connectionString = configuration.GetConnectionString("MyMongoDB");
             return new MongoClient(connectionString);
         });
+        
+        services.AddSingleton<IRepository<Product>, ProductRepository>();
+        
+        ClassMaps.RegisterClassMaps();
         
         return services;
     }
