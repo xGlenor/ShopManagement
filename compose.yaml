@@ -1,0 +1,6 @@
+﻿services:
+  shopmanagementservice.api:
+    image: shopmanagementservice.api
+    build:
+      context: .
+      dockerfile: src/ShopManagementService/ShopManagementService.Api/Dockerfile
