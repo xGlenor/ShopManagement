@@ -25,13 +25,47 @@ public class ProductController: ControllerBase
             ? Ok(result.Data)
             : NotFound();
     }
+
+    [HttpGet("products/{id}")]
+    public async Task<IActionResult> GetProduct(string id)
+    {
+        var result = await _mediator.Send(new GetProductByIdQuery(id));
+        
+        return result.Success 
+            ? Ok(result.Data)
+            : NotFound();
+    }
+    
     
     [HttpPost("products")]
     public async Task<IActionResult> CreateCinema(Product product)
     {
         var result = await _mediator.Send(
-            new CreateProductCommand(product.Id, product.Name, product.Price, product.StockQuantity, product.IsAvailable, DateTime.Now));
+            new CreateProductCommand(product.Name, product.Description, product.Price, product.StockQuantity, product.IsAvailable, DateTime.Now));
 
+        return result.Success
+            ? Ok(result.Data)
+            : NotFound();
+    }
+
+    [HttpPut("products/{id}")]
+    public async Task<IActionResult> UpdateCinema(Product product)
+    {
+        var result = await _mediator.Send(new UpdateProductCommand(
+            product.Id, product.Name, product.Description, product.Price, product.StockQuantity, product.IsAvailable
+        ));
+        
+        
+        return result.Success
+            ? Ok(result.Data)
+            : NotFound();
+    }
+    
+    [HttpDelete("products/{id}")]
+    public async Task<IActionResult> DeleteProduct(string id)
+    {
+        var result = await _mediator.Send(new DeleteProductCommand(id));
+        
         return result.Success
             ? Ok(result.Data)
             : NotFound();
