@@ -1,13 +1,15 @@
 ﻿using Domain.Entities;
 using Mediator;
 using Microsoft.AspNetCore.Mvc;
+using ShopManagementService.Application.Common.Controllers;
 using ShopManagementService.Application.Modules.Products.Commands;
 using ShopManagementService.Application.Modules.Products.Queries;
 
 namespace ShopManagementService.Api.Controllers;
 
 [ApiController]
-public class ProductController: ControllerBase
+[ApiExplorerSettings(GroupName = "v1")]
+public class ProductController: ControllerBase, IController<Product>
 {
     private readonly IMediator _mediator;
 
@@ -15,9 +17,9 @@ public class ProductController: ControllerBase
     {
         _mediator = mediator;
     }
-    
+    [ApiExplorerSettings(GroupName = "v2")]
     [HttpGet("products")]
-    public async Task<IActionResult> GetProducts()
+    public async Task<IActionResult> GetAll()
     {
         var result = await _mediator.Send(GetProductQuery.Instance);
 
@@ -27,7 +29,7 @@ public class ProductController: ControllerBase
     }
 
     [HttpGet("products/{id}")]
-    public async Task<IActionResult> GetProduct(string id)
+    public async Task<IActionResult> GetById(string id)
     {
         var result = await _mediator.Send(new GetProductByIdQuery(id));
         
@@ -38,7 +40,7 @@ public class ProductController: ControllerBase
     
     
     [HttpPost("products")]
-    public async Task<IActionResult> CreateCinema(Product product)
+    public async Task<IActionResult> Create(Product product)
     {
         var result = await _mediator.Send(
             new CreateProductCommand(product.Name, product.Description, product.Price, product.StockQuantity, product.IsAvailable, DateTime.Now));
@@ -49,7 +51,7 @@ public class ProductController: ControllerBase
     }
 
     [HttpPut("products/{id}")]
-    public async Task<IActionResult> UpdateCinema(Product product)
+    public async Task<IActionResult> Update(Product product)
     {
         var result = await _mediator.Send(new UpdateProductCommand(
             product.Id, product.Name, product.Description, product.Price, product.StockQuantity, product.IsAvailable
@@ -62,7 +64,7 @@ public class ProductController: ControllerBase
     }
     
     [HttpDelete("products/{id}")]
-    public async Task<IActionResult> DeleteProduct(string id)
+    public async Task<IActionResult> Delete(string id)
     {
         var result = await _mediator.Send(new DeleteProductCommand(id));
         
