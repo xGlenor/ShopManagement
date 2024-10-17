@@ -8,7 +8,6 @@ using ShopManagementService.Application.Modules.Products.Queries;
 namespace ShopManagementService.Api.Controllers;
 
 [ApiController]
-[ApiExplorerSettings(GroupName = "v1")]
 public class ProductController: ControllerBase, IController<Product>
 {
     private readonly IMediator _mediator;
@@ -17,7 +16,6 @@ public class ProductController: ControllerBase, IController<Product>
     {
         _mediator = mediator;
     }
-    [ApiExplorerSettings(GroupName = "v2")]
     [HttpGet("products")]
     public async Task<IActionResult> GetAll()
     {
