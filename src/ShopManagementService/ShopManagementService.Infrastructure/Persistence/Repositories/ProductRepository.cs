@@ -28,7 +28,7 @@ public class ProductRepository: IRepository<Product>
 
     public async Task<bool> UpdateAsync(Product entity, CancellationToken cancellationToken = default)
     {
-        var updateResult = await _products.ReplaceOneAsync(c => c.Id == entity.Id, entity);
+        var updateResult = await _products.ReplaceOneAsync(c => c.Id == entity.Id, entity, cancellationToken: cancellationToken);
         return updateResult.IsAcknowledged;
     }
 
