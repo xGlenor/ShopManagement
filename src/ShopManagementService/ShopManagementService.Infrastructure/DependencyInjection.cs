@@ -20,6 +20,7 @@ public static class DependencyInjection
         });
         
         services.AddSingleton<IRepository<Product>, ProductRepository>();
+        services.AddSingleton<IRepository<Category>, CategoryRepository>();
         
         ClassMaps.RegisterClassMaps();
         
