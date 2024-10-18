@@ -4,5 +4,5 @@ public record Response<T>
 {
     public T Data { get; init; }
     public bool Success { get; init; }
-    public string ErrorMessage { get; init; }
+    public string Message { get; init; }
 }
