@@ -23,7 +23,7 @@ public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, R
         var products = await _repository.GetByIdAsync(request.Id, cancellationToken);
         
         if (products is null)
-            return new Response<ProductDto> { Success = false, ErrorMessage = "Product doesn't exist!"};
+            return new Response<ProductDto> { Success = false, Message = "Product doesn't exist!"};
 
         return new Response<ProductDto>
         {
